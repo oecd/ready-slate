@@ -1,16 +1,198 @@
-import React from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { createEditor, Transforms, Editor } from 'slate';
+import { Slate, Editable, withReact } from 'slate-react';
+import { withHistory } from 'slate-history';
+import isHotkey from 'is-hotkey';
+import * as R from 'ramda';
 
-const RichText = ({ text }) => (
-  <div className="ready-slate-richtext">{text}</div>
-);
+import RichTextContext from '../contexts/RichTextContext';
+import Leaf from './Leaf';
+import Element from './Element';
+import LinkForm from './LinkForm';
+import { withInlines, withStripPastedNewLines } from '../utils/richTextUtil';
+import { richTextEmptyValue } from '../constants';
+import getComponentByName from './buttons';
+import { isNilOrEmpty, mapWithIndex } from '../utils/ramdaUtil';
+import Toolbar from './Toolbar';
+import HoveringToolbar from './HoveringToolbar';
+
+const createToolbarItems = (itemTypes) => {
+  if (isNilOrEmpty(itemTypes)) {
+    return null;
+  }
+  return mapWithIndex((type, i) => {
+    const Item = getComponentByName(type);
+    return <Item key={`${type}-${i}`} />;
+  }, itemTypes);
+};
+
+const RichText = ({
+  initialValue,
+  setValue,
+  placeholder = '',
+  singleLine = false,
+  onBlur,
+  toolbar,
+  hoveringToolbar,
+  editorFooterContent,
+  disabled,
+  className,
+  popperClassName,
+}) => {
+  const withHandleInsertData = useMemo(
+    () => (singleLine ? withStripPastedNewLines : R.identity),
+    [singleLine],
+  );
+
+  const editor = useMemo(
+    () =>
+      withHandleInsertData(withInlines(withHistory(withReact(createEditor())))),
+    [withHandleInsertData],
+  );
+
+  const [canHoveringToolbarBeDisplayed, setCanHoveringToolbarBeDisplayed] =
+    useState(false);
+  const [isInsertLinkFormVisible, setIsInsertLinkFormVisible] = useState(false);
+  const [isEditLinkFormVisible, setIsEditLinkFormVisible] = useState(false);
+
+  const allowToolbarToBeDisplayed = useCallback(() => {
+    setCanHoveringToolbarBeDisplayed(true);
+  }, []);
+  const handleRichTextBlur = useCallback(() => {
+    setCanHoveringToolbarBeDisplayed(false);
+
+    // on top of "normal" blur, rich text can lose focus because popper form is displayed
+    // (e.g.: link form)
+    // when blur occurs (and form poppers are not displayed), reset selection so that when
+    // the rich text gets focus again, the selected state of elements (e.g.: links) can change from
+    // false to true and the popper can be displayed as expected
+    if (!isEditLinkFormVisible && !isInsertLinkFormVisible) {
+      Transforms.select(editor, {
+        anchor: Editor.start(editor, []),
+        focus: Editor.start(editor, []),
+      });
+    }
+    if (onBlur) {
+      onBlur();
+    }
+  }, [editor, isEditLinkFormVisible, isInsertLinkFormVisible, onBlur]);
+
+  const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
+  const renderElement = useCallback((props) => <Element {...props} />, []);
+
+  const richTextContext = useMemo(
+    () => ({
+      canHoveringToolbarBeDisplayed,
+      setCanHoveringToolbarBeDisplayed,
+      isInsertLinkFormVisible,
+      setIsInsertLinkFormVisible,
+      isEditLinkFormVisible,
+      setIsEditLinkFormVisible,
+      popperClassName,
+    }),
+    [
+      canHoveringToolbarBeDisplayed,
+      isInsertLinkFormVisible,
+      isEditLinkFormVisible,
+      popperClassName,
+    ],
+  );
+
+  const preventNewLineHandler = useMemo(() => {
+    if (singleLine) {
+      return (e) => {
+        if (isHotkey('shift?+enter', e)) {
+          e.preventDefault();
+        }
+      };
+    }
+    return null;
+  }, [singleLine]);
+
+  useEffect(() => {
+    // initialize a selection so that rich text fields can get focus on tab key
+    Transforms.select(editor, {
+      anchor: Editor.start(editor, []),
+      focus: Editor.start(editor, []),
+    });
+  }, [editor]);
+
+  const toolbarItems = useMemo(() => createToolbarItems(toolbar), [toolbar]);
+  const hoveringToolbarItems = useMemo(
+    () => createToolbarItems(hoveringToolbar),
+    [hoveringToolbar],
+  );
+
+  return (
+    <RichTextContext.Provider value={richTextContext}>
+      <div className={`rs-richtext ${className}`}>
+        <Slate
+          editor={editor}
+          value={R.isEmpty(initialValue) ? richTextEmptyValue : initialValue}
+          onChange={setValue}
+          disabled
+        >
+          <div style={{ width: '100%' }}>
+            {toolbarItems && <Toolbar>{toolbarItems}</Toolbar>}
+            {hoveringToolbarItems && (
+              <HoveringToolbar popperClassName={popperClassName}>
+                {hoveringToolbarItems}
+              </HoveringToolbar>
+            )}
+            {isInsertLinkFormVisible && (
+              <LinkForm popperClassName={popperClassName} />
+            )}
+            <Editable
+              onFocus={allowToolbarToBeDisplayed}
+              onBlur={handleRichTextBlur}
+              renderLeaf={renderLeaf}
+              renderElement={renderElement}
+              onKeyDown={preventNewLineHandler}
+              placeholder={placeholder}
+              className="rs-richtext-input"
+              style={{ width: '100%' }}
+              tabIndex={0}
+              readOnly={disabled}
+            />
+            {editorFooterContent && (
+              <div className="rs-footer">{editorFooterContent}</div>
+            )}
+          </div>
+        </Slate>
+      </div>
+    </RichTextContext.Provider>
+  );
+};
 
 RichText.propTypes = {
-  text: PropTypes.string,
+  initialValue: PropTypes.array.isRequired,
+  setValue: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  singleLine: PropTypes.bool,
+  onBlur: PropTypes.func,
+  toolbar: PropTypes.array,
+  hoveringToolbar: PropTypes.array,
+  editorFooterContent: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  popperClassName: PropTypes.string,
 };
 
 RichText.defaultProps = {
-  text: '',
+  placeholder: '',
+  singleLine: false,
+  onBlur: null,
+  toolbar: [],
+  hoveringToolbar: [],
+  editorFooterContent: null,
+  disabled: false,
+  className: '',
+  popperClassName: '',
 };
 
 export default RichText;
