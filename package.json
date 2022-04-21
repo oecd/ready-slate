@@ -1,5 +1,5 @@
 {
-  "name": "ready-slate",
+  "name": "@oecd-pac/ready-slate",
   "version": "1.0.0",
   "description": "Ready to use Slate based RichText",
   "main": "dist/cjs/index.js",
