@@ -1,6 +1,6 @@
 {
   "name": "@oecd-pac/ready-slate",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Ready to use Slate based RichText",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -9,8 +9,7 @@
   ],
   "scripts": {
     "lint": "eslint src/**/*.js",
-    "rollup": "rollup -c",
-    "publish": "npm publish --access public"
+    "rollup": "rollup -c"
   },
   "repository": {
     "type": "git",

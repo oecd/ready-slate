@@ -130,7 +130,7 @@ const RichText = ({
       <div className={`rs-richtext ${className}`}>
         <Slate
           editor={editor}
-          value={R.isEmpty(initialValue) ? richTextEmptyValue : initialValue}
+          value={isNilOrEmpty(initialValue) ? richTextEmptyValue : initialValue}
           onChange={setValue}
           disabled
         >
