@@ -25,10 +25,10 @@ and then use the component:
 
 ```jsx
 import React, { useState } from 'react';
-import { RichText } from '@oecd-pac/ready-slate';
+import { RichText, richTextEmptyValue } from '@oecd-pac/ready-slate';
 
 const App = () => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(richTextEmptyValue);
 
   return (
     <RichText
