@@ -16,7 +16,9 @@
   color: #333333;
   padding: 14px;
   line-height: 1.5715;
-  max-height: 380px;
+  max-height: 350px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .rs-link {
@@ -56,6 +58,12 @@
 
 .rs-button[disabled] {
   cursor: not-allowed;
+}
+.rs-button[disabled]:hover,
+.rs-button[disabled].rs-inactive,
+.rs-button[disabled].rs-active,
+.rs-button[disabled]:hover.rs-inactive {
+  color: #999999;
 }
 
 .rs-button:hover,
