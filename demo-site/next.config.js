@@ -16,4 +16,18 @@ const nextConfig = {
   },
 };
 
+// ******************************************************************************
+// no live transpilation for testing using real @oecd-pac/ready-slate dependency
+// ******************************************************************************
+
+// const plugins = [withBundleAnalyzer];
+
+// const nextConfig = {
+//   eslint: {
+//     // lint is made separately
+//     ignoreDuringBuilds: true,
+//     dirs: ['src'],
+//   },
+// };
+
 module.exports = withPlugins(plugins, nextConfig);
