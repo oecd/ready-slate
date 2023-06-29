@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import beautify from 'js-beautify';
 
-import { slateToHtmlString } from '@oecd-pac/ready-slate/src/index';
+import { slateToHtmlString } from '@oecd-pac/ready-slate';
 
 import RichText from './RichText';
 

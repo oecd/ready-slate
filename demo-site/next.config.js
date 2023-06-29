@@ -1,33 +1,32 @@
-const withPlugins = require('next-compose-plugins');
+/* eslint-disable no-param-reassign */
+const path = require('path');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
-const withTM = require('next-transpile-modules')(['@oecd-pac/ready-slate']);
-
-const plugins = [withBundleAnalyzer, withTM];
+const localLibSourcePath = process.env.LOCAL_LIB_SOURCE_PATH;
+const assetPrefix = process.env.ASSET_PREFIX;
 
 const nextConfig = {
-  assetPrefix: '/ready-slate',
+  assetPrefix,
   eslint: {
     // lint is made separately
     ignoreDuringBuilds: true,
     dirs: ['src'],
   },
+  ...(localLibSourcePath
+    ? {
+        transpilePackages: ['@oecd-pac/ready-slate'],
+        webpack(config) {
+          config.resolve.alias['@oecd-pac/ready-slate$'] = path.join(
+            localLibSourcePath,
+            'src\\index',
+          );
+
+          return config;
+        },
+      }
+    : {}),
 };
 
-// ******************************************************************************
-// no live transpilation for testing using real @oecd-pac/ready-slate dependency
-// ******************************************************************************
-
-// const plugins = [withBundleAnalyzer];
-
-// const nextConfig = {
-//   eslint: {
-//     // lint is made separately
-//     ignoreDuringBuilds: true,
-//     dirs: ['src'],
-//   },
-// };
-
-module.exports = withPlugins(plugins, nextConfig);
+module.exports = withBundleAnalyzer(nextConfig);

@@ -3,3 +3,4 @@ dist
 .npmrc
 demo-site/.next
 demo-site/out
+**/.env

@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import * as R from 'ramda';
 
-import { slateToString } from '@oecd-pac/ready-slate/src/index';
+import { slateToString } from '@oecd-pac/ready-slate';
 
 import RichText from './RichText';
 
