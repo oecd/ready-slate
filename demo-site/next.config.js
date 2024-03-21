@@ -8,6 +8,7 @@ const localLibSourcePath = process.env.LOCAL_LIB_SOURCE_PATH;
 const assetPrefix = process.env.ASSET_PREFIX;
 
 const nextConfig = {
+  output: 'export',
   assetPrefix,
   eslint: {
     // lint is made separately

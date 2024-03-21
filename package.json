@@ -1,12 +1,12 @@
 {
   "name": "@oecd-pac/ready-slate",
-  "version": "1.1.1",
+  "version": "1.1.4",
   "description": "Ready to use Slate based RichText",
   "scripts": {
     "lint": "npm run lint --workspaces",
     "build:lib": "npm run rollup -w=lib",
     "dev": "npm run dev -w demo-site",
-    "build-n-export:demo-site": "npm run build-n-export -w demo-site",
+    "build-n-export:demo-site": "npm run build -w demo-site",
     "start": "npm run start -w demo-site"
   },
   "workspaces": [
