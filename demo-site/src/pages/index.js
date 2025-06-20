@@ -141,6 +141,23 @@ const Home = () => (
             hoveringToolbar={['bold', 'italic', 'underline']}
           />
         </DemoBlock>
+
+        <DemoBlock label="With predefined texts (insert from dropdown)">
+          <RichText
+            predefinedTexts={[
+              { title: 'Greeting', text: 'Hello <b>world!</b>' },
+              { title: 'Phrase', text: 'This is a <i>predefined</i> phrase.' },
+              {
+                title: 'Snippet',
+                text: '<ul><li>First</li><li>Second</li></ul>',
+              },
+              {
+                title: 'Simple text',
+                text: 'not an html string',
+              },
+            ]}
+          />
+        </DemoBlock>
       </div>
     </div>
   </>

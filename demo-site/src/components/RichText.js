@@ -28,7 +28,10 @@ const CustomRichText = ({
     'outdent',
     'separator',
     'link',
+    'separator',
+    'predefined-texts',
   ],
+  predefinedTexts = [],
   ...otherProps
 }) => {
   const [value, setValue] = useState(initialValue);
@@ -38,6 +41,7 @@ const CustomRichText = ({
       initialValue={value}
       setValue={setValue}
       toolbar={toolbar}
+      predefinedTexts={predefinedTexts}
       {...otherProps}
     />
   );
