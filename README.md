@@ -35,7 +35,12 @@ const App = () => {
     <RichText
       initialValue={value}
       setValue={setValue}
-      toolbar={["bold", "italic", "separator", "link"]}
+      toolbar={["bold", "italic", "separator", "link", "predefined-texts"]}
+      predefinedTexts={[
+        { title: 'Greeting', text: 'Hello <b>world!</b>' },
+        { title: 'Phrase', text: 'This is a <i>predefined</i> phrase.' },
+        { title: 'Snippet', text: '<ul><li>First</li><li>Second</li></ul>' },
+      ]}
     />
   );
 };
@@ -51,8 +56,9 @@ RichText
 | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ------------ | ----------- |
 | `initialValue`        | Initial value. You do not need to know the internal format and can pass `richTextEmptyValue` if you do not have an existing value to provide                                                                                                                                                                   | array                  | yes          |             |
 | `setValue`            | A function that will be called passing the current value                                                                                                                                                                                                                                                       | func                   | yes          |             |
-| `toolbar`             | Array of formatting options for the toolbar. Possible values: '`bold`', '`italic`', '`underline`', '`sup`', '`sub`', '`heading1`', '`heading2`', '`bulleted-list`', '`numbered-list`', '`link`', '`align-left`', '`align-right`', '`align-center`', '`align-justify`', '`indent`', '`outdent`', '`separator`', | array                  |              | []          |
+| `toolbar`             | Array of formatting options for the toolbar. Possible values: '`bold`', '`italic`', '`underline`', '`sup`', '`sub`', '`heading1`', '`heading2`', '`bulleted-list`', '`numbered-list`', '`link`', '`align-left`', '`align-right`', '`align-center`', '`align-justify`', '`indent`', '`outdent`', '`separator`', '`predefined-texts`' | array                  |              | []          |
 | `hoveringToolbar`     | Array of formatting options for the hovering toolbar (same options than for toolbar)                                                                                                                                                                                                                           | array                  |              | []          |
+| `predefinedTexts`     | Array of objects for predefined texts to insert. Each object should have a `title` (string) and a `text` (string, can include HTML markup). When the `predefined-texts` toolbar option is enabled, a dropdown will allow inserting these texts at the cursor position.                                   | array of objects       |              | []          |
 | `placeholder`         | RichText placeholder                                                                                                                                                                                                                                                                                           | string                 |              | ''          |
 | `singleLine`          | Prevent user from creating new paragraph by pressing Enter                                                                                                                                                                                                                                                     | bool                   |              | false       |
 | `onBlur`              | A custom onBlur function                                                                                                                                                                                                                                                                                       | func                   |              | null        |
