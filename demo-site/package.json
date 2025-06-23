@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@next/bundle-analyzer": "14.1.4",
-    "@oecd-pac/ready-slate": "^1.1.4",
+    "@oecd-pac/ready-slate": "^1.2.0",
     "js-beautify": "^1.15.1",
     "next": "14.1.4",
     "prop-types": "^15.8.1",
