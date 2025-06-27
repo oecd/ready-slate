@@ -1,0 +1,17 @@
+{
+  "extends": ["airbnb", "next/core-web-vitals"],
+  "settings": {
+    "import/internal-regex": "@oecd-pac/ready-slate"
+  },
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/function-component-definition": "off",
+    "no-underscore-dangle": "off",
+    "react/require-default-props": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "implicit-arrow-linebreak": "off",
+    "react/jsx-wrap-multilines": "off",
+    "indent": "off",
+    "operator-linebreak": "off"
+  }
+}
