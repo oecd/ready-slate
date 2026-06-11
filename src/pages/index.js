@@ -142,18 +142,48 @@ const Home = () => (
           />
         </DemoBlock>
 
-        <DemoBlock label="With predefined texts (insert from dropdown)">
+        <DemoBlock label="With predefined texts (nested menu)">
           <RichText
             predefinedTexts={[
-              { title: 'Greeting', text: 'Hello <b>world!</b>' },
-              { title: 'Phrase', text: 'This is a <i>predefined</i> phrase.' },
               {
-                title: 'Snippet',
-                text: '<ul><li>First</li><li>Second</li></ul>',
+                title: 'Lorem Ipsum',
+                text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
               },
               {
-                title: 'Simple text',
-                text: 'not an html string',
+                title: 'Symbols and spacing',
+                items: [
+                  { title: 'Trademark', text: '™' },
+                  { title: 'Spaced tildes', text: ' ~~ ' },
+                ],
+              },
+              { type: 'separator' },
+              {
+                title: 'Entities',
+                items: [
+                  { title: 'nbsp + right guillemet', text: '&#160;&#187;' },
+                  {
+                    title: 'left nbsp TM nbsp right',
+                    text: '&#171;&#160;&#8482;&#160;&#187;',
+                  },
+                ],
+              },
+              { type: 'separator' },
+              {
+                title: 'Snippets',
+                items: [
+                  {
+                    title: 'Inline markup',
+                    text: 'Hello <b>world</b>, this is <i>rich</i> text.',
+                  },
+                  {
+                    title: 'Block without paragraph',
+                    text: '<ul><li>First</li><li>Second</li></ul>',
+                  },
+                  {
+                    title: 'Block with paragraph',
+                    text: '<p><strong>Intro:</strong> choose an item</p><ul><li>One</li><li>Two</li></ul>',
+                  },
+                ],
               },
             ]}
           />
