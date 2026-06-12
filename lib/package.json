@@ -11,6 +11,10 @@
     "lint": "eslint src/**/*.js",
     "build": "rollup -c"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oecd/ready-slate.git"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
