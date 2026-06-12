@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 const withBundleAnalyzer = require('@next/bundle-analyzer')();
 
 const localLibSourcePath = process.env.LOCAL_LIB_SOURCE_PATH;
@@ -8,12 +7,7 @@ const assetPrefix = process.env.ASSET_PREFIX;
 const nextConfig = {
   output: 'export',
   assetPrefix,
-  eslint: {
-    // lint is made separately
-    ignoreDuringBuilds: true,
-    dirs: ['src'],
-  },
-  ...(localLibSourcePath && env === 'development'
+  ...(localLibSourcePath
     ? {
         turbopack: {
           resolveAlias: {
