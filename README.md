@@ -25,8 +25,8 @@ On the other hand, if your requirements are basic like bold, italic, ... (see fu
 and then use the component:
 
 ```jsx
-import React, { useState } from "react";
-import { RichText, richTextEmptyValue } from "@oecd-pac/ready-slate";
+import React, { useState } from 'react';
+import { RichText, richTextEmptyValue } from '@oecd-pac/ready-slate';
 
 const App = () => {
   const [value, setValue] = useState(richTextEmptyValue);
@@ -35,7 +35,7 @@ const App = () => {
     <RichText
       initialValue={value}
       setValue={setValue}
-      toolbar={["bold", "italic", "separator", "link", "predefined-texts"]}
+      toolbar={['bold', 'italic', 'separator', 'link', 'predefined-texts']}
       predefinedTexts={[
         { title: 'Greeting', text: 'Hello <b>world!</b>' },
         { title: 'Phrase', text: 'This is a <i>predefined</i> phrase.' },
@@ -52,20 +52,20 @@ export default App;
 
 RichText
 
-| **Props**             | **Description**                                                                                                                                                                                                                                                                                                | **Type**               | **Required** | **Default** |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ------------ | ----------- |
-| `initialValue`        | Initial value. You do not need to know the internal format and can pass `richTextEmptyValue` if you do not have an existing value to provide                                                                                                                                                                   | array                  | yes          |             |
-| `setValue`            | A function that will be called passing the current value                                                                                                                                                                                                                                                       | func                   | yes          |             |
+| **Props**             | **Description**                                                                                                                                                                                                                                                                                                                     | **Type**               | **Required** | **Default** |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | ------------ | ----------- |
+| `initialValue`        | Initial value. You do not need to know the internal format and can pass `richTextEmptyValue` if you do not have an existing value to provide                                                                                                                                                                                        | array                  | yes          |             |
+| `setValue`            | A function that will be called passing the current value                                                                                                                                                                                                                                                                            | func                   | yes          |             |
 | `toolbar`             | Array of formatting options for the toolbar. Possible values: '`bold`', '`italic`', '`underline`', '`sup`', '`sub`', '`heading1`', '`heading2`', '`bulleted-list`', '`numbered-list`', '`link`', '`align-left`', '`align-right`', '`align-center`', '`align-justify`', '`indent`', '`outdent`', '`separator`', '`predefined-texts`' | array                  |              | []          |
-| `hoveringToolbar`     | Array of formatting options for the hovering toolbar (same options than for toolbar)                                                                                                                                                                                                                           | array                  |              | []          |
-| `predefinedTexts`     | Array of objects for predefined texts to insert. Each object should have a `title` (string) and a `text` (string, can include HTML markup). When the `predefined-texts` toolbar option is enabled, a dropdown will allow inserting these texts at the cursor position.                                   | array of objects       |              | []          |
-| `placeholder`         | RichText placeholder                                                                                                                                                                                                                                                                                           | string                 |              | ''          |
-| `singleLine`          | Prevent user from creating new paragraph by pressing Enter                                                                                                                                                                                                                                                     | bool                   |              | false       |
-| `onBlur`              | A custom onBlur function                                                                                                                                                                                                                                                                                       | func                   |              | null        |
-| `editorFooterContent` | Custom footer content                                                                                                                                                                                                                                                                                          | node or array of nodes |              | null        |
-| `disabled`            | Disable the RichText                                                                                                                                                                                                                                                                                           | bool                   |              | false       |
-| `className`           | RichText custom css class (mainly useful to override default style)                                                                                                                                                                                                                                            | string                 |              | ''          |
-| `popperClassName`     | Popper (hovering toolbar, link form) custom css class (mainly useful to override default style)                                                                                                                                                                                                                | string                 |              | ''          |
+| `hoveringToolbar`     | Array of formatting options for the hovering toolbar (same options than for toolbar)                                                                                                                                                                                                                                                | array                  |              | []          |
+| `predefinedTexts`     | Array of objects for predefined texts to insert. Each object should have a `title` (string) and a `text` (string, can include HTML markup). When the `predefined-texts` toolbar option is enabled, a dropdown will allow inserting these texts at the cursor position.                                                              | array of objects       |              | []          |
+| `placeholder`         | RichText placeholder                                                                                                                                                                                                                                                                                                                | string                 |              | ''          |
+| `singleLine`          | Prevent user from creating new paragraph by pressing Enter                                                                                                                                                                                                                                                                          | bool                   |              | false       |
+| `onBlur`              | A custom onBlur function                                                                                                                                                                                                                                                                                                            | func                   |              | null        |
+| `editorFooterContent` | Custom footer content                                                                                                                                                                                                                                                                                                               | node or array of nodes |              | null        |
+| `disabled`            | Disable the RichText                                                                                                                                                                                                                                                                                                                | bool                   |              | false       |
+| `className`           | RichText custom css class (mainly useful to override default style)                                                                                                                                                                                                                                                                 | string                 |              | ''          |
+| `popperClassName`     | Popper (hovering toolbar, link form) custom css class (mainly useful to override default style)                                                                                                                                                                                                                                     | string                 |              | ''          |
 
 On top of the RichText component, `ready-slate` exports a few useful helper functions and constants:
 
@@ -86,3 +86,11 @@ The RichText component comes with very neutral styling but if you wish to change
 ### Contributing
 
 Even though ready-slate is not directly "extensible", feel free to add new features to the code base and propose PRs.
+
+### Publish to npm
+
+- Change the version in both `package.json` and `package-lock.json`: x.y.z
+- Commit and push
+- Create a new tag that correspond to the new version: `git tag vx.y.z`
+- Push tags: `git push --tags`
+- A Github action will build and publish the new version

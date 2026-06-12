@@ -80,3 +80,11 @@ The RichText component comes with very neutral styling but if you wish to change
 ### Contributing
 
 Even though ready-slate is not directly "extensible", feel free to add new features to the code base and propose PRs.
+
+### Publish to npm
+
+- Change the version in both `package.json` and `package-lock.json`: x.y.z
+- Commit and push
+- Create a new tag that correspond to the new version: `git tag vx.y.z`
+- Push tags: `git push --tags`
+- A Github action will build and publish the new version
