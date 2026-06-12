@@ -7,7 +7,7 @@ const assetPrefix = process.env.ASSET_PREFIX;
 const nextConfig = {
   output: 'export',
   assetPrefix,
-  ...(localLibSourcePath
+  ...(localLibSourcePath && env === 'development'
     ? {
         turbopack: {
           resolveAlias: {
