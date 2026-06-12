@@ -19,6 +19,10 @@ jobs:
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
-      - run: npm ci
-      - run: npm run build
-      - run: npm publish
+
+      - name: Build lib and publish
+        run: |
+          cd lib
+          npm ci
+          npm run build
+          npm publish
